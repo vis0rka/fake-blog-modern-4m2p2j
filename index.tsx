@@ -7,6 +7,7 @@ import { Post } from './Post';
 function App() {
   const [data, setData] = React.useState<IPostWithUser[]>();
   const [loading, setLodaing] = React.useState<boolean>(true);
+  const [error, setError] = React.useState()
 
   React.useEffect(() => {
     const getData = async () => {
@@ -26,14 +27,19 @@ function App() {
         setLodaing(false);
       } catch (e) {
         console.log(e);
+        setError('Something went wrong')
       }
     };
 
     getData();
   }, []);
 
+  if(error) {
+    return <div className='wrapper'>{error}</div>
+  }
+
   if (loading) {
-    return <div>...loading</div>;
+    return <div className='wrapper'>...loading</div>;
   }
 
   return (
